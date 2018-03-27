@@ -1,0 +1,13 @@
+table, body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.custom_amount {
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 148px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 5px;
+  margin-right: 7px;
+  text-align: right;
+}
