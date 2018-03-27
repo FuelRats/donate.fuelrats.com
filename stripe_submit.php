@@ -11,7 +11,7 @@ require_once 'env-reader.php';
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 require_once 'stripe-php/init.php';
 
-\Stripe\Stripe::setApiKey( env( 'STRIPE_PRIVATE_KEY' ) );
+\Stripe\Stripe::setApiKey( env( 'STRIPE_SECRET_KEY' ) );
 
 $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
