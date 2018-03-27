@@ -17,7 +17,7 @@ $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
 // Charge the user's card:
 $charge = \Stripe\Charge::create( array(
-    'amount" => $amount,
+    'amount' => $amount,
     'currency' => 'eur',
     'description' => 'Fuel Rats Donation',
     'source' => $token,
