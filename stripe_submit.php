@@ -14,7 +14,7 @@ require_once 'stripe-php/init.php';
 \Stripe\Stripe::setApiKey( env( 'STRIPE_PRIVATE_KEY' ) );
 
 $token = $_POST['stripeToken'];
-$amount = intval( $_POST['amount'] );
+$amount = $_POST['amount'];
 // Charge the user's card:
 $charge = \Stripe\Charge::create( array(
     'amount" => $amount,
