@@ -9,7 +9,7 @@ function load_environment() {
   }
 }
 
-function env( $environmentName, $default ) {
+function env( $environmentName, $default = null ) {
   return ( getenv( $environmentName ) ? getenv( $environmentName ) : $default );
 }
 
