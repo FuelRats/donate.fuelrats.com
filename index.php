@@ -20,7 +20,7 @@ include_once 'functions.php';
             <option value="">Select currency</option>
             <option value="EUR">Euro €</option>
             <option value="USD">US Dollar $</option>
-            <option value="GBP">Great British Pounds £</option>
+            <option value="GBP">British Pounds £</option>
         </select>
     </div>
     <div class="flex-box">

@@ -39,12 +39,12 @@ function get_currency($currency) {
             ),
         ),
         'GBP' => array(
-            'Name' => 'Great British Pound',
+            'Name' => 'British Pound',
             'Symbol' => '£',
             'Tier' => array(
                 '1' => array(
                     'Sum' => 100,
-                    'Text' => 'Every little bit helps! If half of our rescued commanders were to donate one Great British Pound, we would easily cover our server costs each month.',
+                    'Text' => 'Every little bit helps! If half of our rescued commanders were to donate one British Pound, we would easily cover our server costs each month.',
                 ),
                 '5' => array(
                     'Sum' => 500,
@@ -52,7 +52,7 @@ function get_currency($currency) {
                 ),
                 '10' => array(
                     'Sum' => 1000,
-                    'Text' => 'Wow! Ten Great British Pounds is a major donation for our sake; it offsets the costs of running our servers for three whole days! You\'re awesome!',
+                    'Text' => 'Wow! Ten British Pounds is a major donation for our sake; it offsets the costs of running our servers for three whole days! You\'re awesome!',
                 )
             ),
         ),
