@@ -19,9 +19,10 @@ $currency = $_POST['currency'];
 // Charge the user's card:
 $charge = \Stripe\Charge::create( array(
     'amount' => $amount,
-    'currency' => 'eur',
+    'currency' => $currency,
     'description' => 'Fuel Rats Donation',
     'source' => $token,
 ) );
+
 ?>
 <h3>Thank you for your donation!</h3>
