@@ -105,7 +105,8 @@ function render_donation($currency, $tier) {
                         data-locale="auto"
                         data-currency="<?php echo strtolower($currency); ?>">
                 </script>
-                <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>">
+                <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>" />
+                <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
             </form>
     <?php
 }

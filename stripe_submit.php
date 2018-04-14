@@ -15,6 +15,7 @@ require_once 'stripe-php/init.php';
 
 $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
+$currency = $_POST['currency'];
 // Charge the user's card:
 $charge = \Stripe\Charge::create( array(
     'amount' => $amount,
