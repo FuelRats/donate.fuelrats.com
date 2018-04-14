@@ -16,7 +16,7 @@ function get_rates() {
     return json_decode( $content, true );
 }
 
-function render_donation($currency, $tier) {
+function get_currency($currency) {
     $currencies = array(
         'EUR' => array(
             'Name' => 'Euro',
@@ -85,6 +85,12 @@ function render_donation($currency, $tier) {
         $selected_currency = $currencies['EUR'];
         break;
     }
+
+    return $selected_currency;
+}
+
+function render_donation($currency, $tier) {
+    $selected_currency = get_currency( $currency );
     ?>
     <h3>Donate</h3><br> <h1><?php echo $selected_currency['Symbol'] . $tier; ?></h1><br>
             <p><?php echo $selected_currency['Tier'][$tier]['Text']; ?></p>

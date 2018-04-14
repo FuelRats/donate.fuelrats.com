@@ -14,6 +14,8 @@ if(!in_array($currency, $validCurrency)) {
     $currency = 'EUR';
 }
 
+$selected_currency = get_currency( $currency );
+
 header("Content-type: text/html; charset=utf-8");
 ?>
 <html>
@@ -41,10 +43,10 @@ who have fronted the money to keep these servers running, but if you'd like to c
         <?php render_donation($currency, '10'); ?>
 </div>
 	<div class="selection">
-	  <h3>Donate</h3><br /><h1>Custom amount!</h1><br />
+	  <h3>Donate</h3><br /><h1>Custom amount of <?php echo $selected_currency['Name']; ?>!</h1><br />
 	  <p>Holy limpet! You sure like to live dangerously! Please enter a custom value that you want to donate. We are most grateful for everything you can give.</p>
 	  <form action="stripe_submit.php" method="POST" id="custom_amount_form">
-	    <input class="custom_amount" onkeyup="custom_amount_calculate();" placeholder="€ Custom amount" type="number" name="custom_amount" />
+	    <input class="custom_amount" onkeyup="custom_amount_calculate();" placeholder="<?php echo $selected_currency['Symbol']; ?> Custom amount" type="number" name="custom_amount" />
 	    <input id="custom_amount_value" type="hidden" name="amount" />
 	    <script
 	      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -53,7 +55,7 @@ who have fronted the money to keep these servers running, but if you'd like to c
 	      data-description="Custom amount donation"
 	      data-image="https://donate.fuelrats.com/fuelrats.png"
 	      data-locale="auto"
-	      data-currency="eur">
+	      data-currency="<?php echo strtolower($currency); ?>">
 	    </script>
     </div>
 </div>
@@ -78,9 +80,9 @@ function custom_amount() {
   sca.dataset.name = 'The Fuel Rats';
   sca.dataset.image = 'https://donate.fuelrats.com/fuelrats.png';
   sca.dataset.locale = 'auto';
-  sca.dataset.currency = 'eur';
+  sca.dataset.currency = '<?php echo strtolower($currency); ?>';
   sca.dataset.amount = amount * 100;
-  sca.dataset.description = '€' + amount + ' Donation';
+  sca.dataset.description = '<?php echo $selected_currency['Symbol']; ?>' + amount + ' Donation';
 
   amount_box.parentNode.insertBefore(sca, amount_box.nextSibling);
 }
