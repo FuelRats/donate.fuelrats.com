@@ -6,11 +6,103 @@ require_once 'env-reader.php';
  * Date: 26/03/2018
  * Time: 14:12
  */
+$currency = 'GBP';
+function render_donation($currency, $tier) {
+    $currencies = array(
+        'EUR' => array(
+            'Name' => 'Euro',
+            'Symbol' => '€',
+            'Tier' => array(
+                '1' => array(
+                    'Sum' => 100,
+                    'Text' => 'Every little bit helps! If half of our rescued commanders were to donate one Euro, we would easily cover our server costs each month.',
+                ),
+                '5' => array(
+                    'Sum' => 500,
+                    'Text' => 'Thank you so much! A €5 donation will go a long way towards covering our running costs. o7, CMDR!',
+                ),
+                '10' => array(
+                    'Sum' => 1000,
+                    'Text' => 'Wow! Ten euros is a major donation for our sake; it offsets the costs of running our servers for three whole days! You\'re awesome!',
+                )
+            ),
+        ),
+        'GBP' => array(
+            'Name' => 'Great British Pound',
+            'Symbol' => '£',
+            'Tier' => array(
+                '1' => array(
+                    'Sum' => 100,
+                    'Text' => 'Every little bit helps! If half of our rescued commanders were to donate one Great British Pound, we would easily cover our server costs each month.',
+                ),
+                '5' => array(
+                    'Sum' => 500,
+                    'Text' => 'Thank you so much! A £5 donation will go a long way towards covering our running costs. o7, CMDR!',
+                ),
+                '10' => array(
+                    'Sum' => 1000,
+                    'Text' => 'Wow! Ten Great British Pounds is a major donation for our sake; it offsets the costs of running our servers for three whole days! You\'re awesome!',
+                )
+            ),
+        ),
+        'USD' => array(
+            'Name' => 'US Dollar',
+            'Symbol' => '$',
+            'Tier' => array(
+                '1' => array(
+                    'Sum' => 100,
+                    'Text' => 'Every little bit helps! If half of our rescued commanders were to donate one US Dollar, we would easily cover our server costs each month.',
+                ),
+                '5' => array(
+                    'Sum' => 500,
+                    'Text' => 'Thank you so much! A $5 donation will go a long way towards covering our running costs. o7, CMDR!',
+                ),
+                '10' => array(
+                    'Sum' => 1000,
+                    'Text' => 'Wow! Ten US Dollars is a major donation for our sake; it offsets the costs of running our servers for three whole days! You\'re awesome!',
+                )
+            ),
+        ),
+    );
+
+    switch($currency) {
+        case 'USD':
+        $selected_currency = $currencies['USD'];
+        break;
+        case 'GBP':
+        $selected_currency = $currencies['GBP'];
+        break;
+        default:
+        $selected_currency = $currencies['EUR'];
+        break;
+    }
+    ?>
+    <h3>Donate</h3><br> <h1><?php echo $selected_currency['Symbol'] . $tier; ?></h1><br>
+            <p><?php echo $selected_currency['Tier'][$tier]['Text']; ?></p>
+            <form action="stripe_submit.php" method="POST">
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
+                        data-amount="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>"
+                        data-name="The Fuel Rats"
+                        data-description="<?php echo $selected_currency['Symbol'] . $tier; ?> Donation"
+                        data-image="https://donate.fuelrats.com/fuelrats.png"
+                        data-locale="auto"
+                        data-currency="<?php echo strtolower($currency); ?>">
+                </script>
+                <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>">
+            </form>
+    <?php
+}
+
 header("Content-type: text/html; charset=utf-8");
 ?>
 <html>
 <head>
 <title>The Fuel Rats Mischief - Donations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="fuelrats.css" type="text/css" rel="stylesheet" />
+
 </head>
 <body>
 <h2><div style="text-align: center;">Donate to The Fuel Rats</div></h2><br>
@@ -19,61 +111,17 @@ header("Content-type: text/html; charset=utf-8");
 systems in place to help us do our rescues, and the servers they run on amount to over €100 per month. We've got rats
 who have fronted the money to keep these servers running, but if you'd like to contribute, that would be great!</p>
 <p>Our donations are processed through Stripe, and they take most major credit cards.</p>
-<table width="100%" cellpadding="35" d>
-    <tr><td align="center">
-            <h3>Donate</h3><br> <h1>€1</h1><br>
-            <p>Every little bit helps! If half of our rescued commanders were to donate one Euro, we would easily cover
-                our server costs each month.</p>
-            <form action="stripe_submit.php" method="POST">
-                <script
-                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
-                        data-amount="100"
-                        data-name="The Fuel Rats"
-                        data-description="€1 Donation"
-                        data-image="https://donate.fuelrats.com/fuelrats.png"
-                        data-locale="auto"
-                        data-currency="eur">
-                </script>
-                <input type="hidden" name="amount" value="100">
-            </form>
-        </td>
-        <td align="center">
-            <h3>Donate</h3><br> <h1>€5</h1><br>
-            <p>Thank you so much! A €5 donation will go a long way towards covering our running costs. o7, CMDR!</p>
-            <form action="stripe_submit.php" method="POST">
-                <script
-                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
-                        data-amount="500"
-                        data-name="The Fuel Rats"
-                        data-description="€5 Donation"
-                        data-image="https://donate.fuelrats.com/fuelrats.png"
-                        data-locale="auto"
-                        data-currency="eur">
-                </script>
-                <input type="hidden" name="amount" value="500">
-            </form>
-        </td>
-        <td align="center">
-            <h3>Donate</h3><br> <h1>€10</h1><br>
-            <p>Wow! Ten euros is a major donation for our sake; it offsets the costs of running our servers for three
-                whole days! You're awesome!</p>
-            <form action="stripe_submit.php" method="POST">
-                <script
-                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
-                        data-amount="1000"
-                        data-name="The Fuel Rats"
-                        data-description="€10 Donation"
-                        data-image="https://donate.fuelrats.com/fuelrats.png"
-                        data-locale="auto"
-                        data-currency="eur">
-                </script>
-                <input type="hidden" name="amount" value="1000">
-            </form>
-        </td>
-	<td align="center">
+<div class="flex-box">
+    <div class="selection">
+          <?php render_donation($currency, '1'); ?>
+</div>
+        <div class="selection">
+        <?php render_donation($currency, '5'); ?>
+</div>
+        <div class="selection">
+        <?php render_donation($currency, '10'); ?>
+</div>
+	<div class="selection">
 	  <h3>Donate</h3><br /><h1>Custom amount!</h1><br />
 	  <p>Holy limpet! You sure like to live dangerously! Please enter a custom value that you want to donate. We are most grateful for everything you can give.</p>
 	  <form action="stripe_submit.php" method="POST" id="custom_amount_form">
@@ -88,10 +136,9 @@ who have fronted the money to keep these servers running, but if you'd like to c
 	      data-locale="auto"
 	      data-currency="eur">
 	    </script>
-	</td>
-    </tr></table>
-    <link href="fuelrats.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript">
+    </div>
+</div>
+    <script type="text/javascript">
 function custom_amount() {
 
   var custom_form = document.getElementById('custom_amount_form');
