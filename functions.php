@@ -1,4 +1,6 @@
 <?php
+require_once 'env-reader.php';
+
 function debug_write( $obj ) {
     ob_start();
     var_dump( $obj );
@@ -108,5 +110,67 @@ function render_donation($currency, $tier) {
                 <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>" />
                 <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
             </form>
+    <?php
+}
+
+function render_paymentrequest($currency, $tier) {
+    $selected_currency = get_currency( $currency );
+    ?>
+    <h3>Donate</h3><br> <h1><?php echo $selected_currency['Symbol'] . $tier; ?></h1><br>
+            <p><?php echo $selected_currency['Tier'][$tier]['Text']; ?></p>
+            <div class="donation_<?php echo $tier; ?>"></div>
+    <script type="text/javascript">
+    var pr<?php echo $tier; ?> = stripe.paymentRequest({
+        country: 'NO',
+        currency: '<?php echo strtolower($currency); ?>',
+        total: {
+            label: '<?php echo $selected_currency['Symbol'] . $tier; ?> Donation',
+            amount: <?php echo $selected_currency['Tier'][$tier]['Sum']; ?>,
+        }
+    });
+
+    var elements<?php echo $tier; ?> = stripe.elements();
+    var prButton<?php echo $tier; ?> = elements<?php echo $tier; ?>.create('paymentRequestButton', {
+    paymentRequest: pr<?php echo $tier; ?>,
+    });
+
+    // Check the availability of the Payment Request API first.
+    pr<?php echo $tier; ?>.canMakePayment().then(function(result) {
+    if (result) {
+        prButton<?php echo $tier; ?>.mount('.donation_<?php echo $tier; ?>');
+    } else {
+        document.querySelector('.donation_<?php echo $tier; ?>').style.display = 'none';
+    }
+    });
+
+    pr<?php echo $tier; ?>.on('token', function(ev) {
+
+        var amount = <?php echo $selected_currency['Tier'][$tier]['Sum']; ?>;
+        var token = ev.token.id;
+
+        document.getElementById('mob_amount').value = amount;
+        document.getElementById('mob_token').value = token;
+        ev.complete('success');
+        document.getElementById('sub_token').submit();
+  // Send the token to your server to charge it!
+  /*fetch('/charges', {
+    method: 'POST',
+    body: JSON.stringify({token: ev.token.id}),
+    headers: {'content-type': 'application/json'},
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // Report to the browser that the payment was successful, prompting
+      // it to close the browser payment interface.
+      ev.complete('success');
+    } else {
+      // Report to the browser that the payment failed, prompting it to
+      // re-show the payment interface, or show an error message and close
+      // the payment interface.
+      ev.complete('fail');
+    }
+  });*/
+});
+    </script>
     <?php
 }
