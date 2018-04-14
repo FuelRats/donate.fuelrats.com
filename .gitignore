@@ -1,3 +1,5 @@
 .env
 stripe-php/*
 .well-known/*
+.vagrant
+conversion-cache.json
