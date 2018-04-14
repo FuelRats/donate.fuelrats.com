@@ -15,12 +15,30 @@ require_once 'stripe-php/init.php';
 
 $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
+$currency = $_POST['currency'];
+
+if(empty($token)) {
+    header("Location: index.php");
+}
+
 // Charge the user's card:
+try {
 $charge = \Stripe\Charge::create( array(
     'amount' => $amount,
-    'currency' => 'eur',
+    'currency' => $currency,
     'description' => 'Fuel Rats Donation',
     'source' => $token,
 ) );
+$successful = true;
+} catch (Exception $exception) {
+    $successful = false;
+}
+if($successful) {
 ?>
 <h3>Thank you for your donation!</h3>
+<?php
+} else {
+?>
+<h3>We're sorry, but your donation didn't go through. :/</h3>
+<?php
+}
