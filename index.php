@@ -38,13 +38,13 @@ include_once 'functions.php';
                 I want to donate with Apple / Google Pay!
             </label>
         </div>
-        <div class="selection">
+        <?php /*<div class="selection">
             <label>
                 <h3>Donate with Giropay (Only EUR)</h3>
                 <input type="radio" name="donation_type" value="giro" />
                 I want to donate with Giropay!
             </label>
-        </div>
+        </div>*/ ?>
     </div>
     <hr />
     <div class="center">

@@ -14,6 +14,15 @@ table, body {
 
 .selection {
   text-align: center;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #FCFCFC;
+  box-shadow: 0 2px 1px rgba(0,0,0,0.16);
+  margin-bottom: 5px;
+}
+
+.selection h3 {
+  margin-top: 0;
 }
 
 .custom_amount {
