@@ -19,7 +19,7 @@ if( ! in_array( $currency, $validCurrency ) ) {
 switch( $donation_type )
 {
     case 'card':
-        include_once 'donate.php';
+        include_once 'donate_card.php';
         break;
     case 'aplgogl':
         include_once 'donate_aplgogl.php';
