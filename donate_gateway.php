@@ -28,6 +28,6 @@ switch( $donation_type )
         include_once 'donate_giro.php';
         break;
     default:
-        include_once 'donate.php';
+        include_once 'donate_card.php';
         break;
 }
