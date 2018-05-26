@@ -18,8 +18,10 @@ $amount = $_POST['amount'];
 $currency = $_POST['currency'];
 
 if(empty($token)) {
-    header("Location: index.php");
+    header("Location: donate.php");
 }
+
+$charge = null;
 
 // Charge the user's card:
 try {

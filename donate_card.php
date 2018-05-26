@@ -48,6 +48,7 @@ who have fronted the money to keep these servers running, but if you'd like to c
 	  <form action="stripe_submit.php" method="POST" id="custom_amount_form">
 	    <input class="custom_amount" onkeyup="custom_amount_calculate();" placeholder="<?php echo $selected_currency['Symbol']; ?> Custom amount" type="number" name="custom_amount" />
 	    <input id="custom_amount_value" type="hidden" name="amount" />
+      <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
 	    <script
 	      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 	      data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
