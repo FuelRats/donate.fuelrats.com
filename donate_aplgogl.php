@@ -31,10 +31,6 @@ header("Content-type: text/html; charset=utf-8");
 </script>
 <h2><div style="text-align: center;">Donate to The Fuel Rats</div></h2><br>
 <div style="text-align: center;"><img src="fuelrats2.png"></div>
-<p>Thank you for considering donating to The Fuel Rats. As simple as our jobs are in the end, we actually have a lot of
-systems in place to help us do our rescues, and the servers they run on amount to over €100 per month. We've got rats
-who have fronted the money to keep these servers running, but if you'd like to contribute, that would be great!</p>
-<p>Our donations are processed through Stripe, and they take most major credit cards.</p>
 <div class="flex-box">
     <div class="selection">
           <?php render_paymentrequest($currency, '1'); ?>
