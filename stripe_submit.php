@@ -1,5 +1,7 @@
 <?php
 require_once 'env-reader.php';
+require_once 'functions.php';
+
 /**
  * Created by PhpStorm.
  * User: Kenneth

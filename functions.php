@@ -9,7 +9,7 @@ function get_csrf_token() {
 }
 
 function validate_csrf_token() {
-    if( ! empty( $_SESSION['token'] ) ) {
+    if( empty( $_SESSION['token'] ) ) {
         return false;
     }
 
