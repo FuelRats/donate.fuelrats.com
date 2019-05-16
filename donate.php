@@ -63,7 +63,7 @@ require_once 'functions.php';
     </div>
     <hr/>
     <div class="center">
-        <div class="g-recaptcha" data-sitekey="<?php echo env('RECAPTCHA_SITE_KEY'); ?>"></div>
+        <div class="g-recaptcha" data-sitekey="<?php echo env('RECAPTCHA_SITE_KEY'); ?>" style="display: inline-block;"></div>
         <br/>
         <input type="hidden" name="csrf-protec-not-attac" value="<?php echo get_csrf_token(); ?>" />
         <input type="submit" value="Proceed to donation page"/>
