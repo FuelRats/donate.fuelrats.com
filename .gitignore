@@ -2,4 +2,5 @@
 stripe-php/*
 .well-known/*
 .vagrant
+.idea
 conversion-cache.json

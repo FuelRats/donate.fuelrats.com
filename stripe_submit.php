@@ -17,7 +17,16 @@ $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
 $currency = $_POST['currency'];
 
-if(empty($token)) {
+$validCurrency = array( 'EUR', 'GBP', 'USD' );
+if ( ! in_array( $currency, $validCurrency ) || ! validate_csrf_token() ) {
+    sleep(2);
+    ?>
+    <h3>Thank you for your donation!</h3>
+    <?php
+    exit(0);
+}
+
+if( empty( $token ) ) {
     header("Location: donate.php");
 }
 
@@ -35,7 +44,7 @@ $successful = true;
 } catch (Exception $exception) {
     $successful = false;
 }
-if($successful) {
+if( $successful ) {
 ?>
 <h3>Thank you for your donation!</h3>
 <?php

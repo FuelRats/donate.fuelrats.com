@@ -9,14 +9,14 @@ require_once 'functions.php';
  */
 $currency = $_REQUEST['currency'];
 
-$validCurrency = array('EUR','GBP','USD');
-if(!in_array($currency, $validCurrency)) {
+$validCurrency = array( 'EUR','GBP','USD' );
+if( ! in_array( $currency, $validCurrency ) ) {
     $currency = 'EUR';
 }
 
 $selected_currency = get_currency( $currency );
 
-header("Content-type: text/html; charset=utf-8");
+header( "Content-type: text/html; charset=utf-8" );
 ?>
 <html>
 <head>
@@ -33,17 +33,18 @@ header("Content-type: text/html; charset=utf-8");
 <div style="text-align: center;"><img src="fuelrats2.png"></div>
 <div class="flex-box">
     <div class="selection">
-          <?php render_paymentrequest($currency, '1'); ?>
+          <?php render_paymentrequest( $currency, '1' ); ?>
     </div>
     <div class="selection">
-        <?php render_paymentrequest($currency, '5'); ?>
+        <?php render_paymentrequest( $currency, '5' ); ?>
     </div>
     <div class="selection">
-        <?php render_paymentrequest($currency, '10'); ?>
+        <?php render_paymentrequest( $currency, '10' ); ?>
     </div>
 </div>
 <form action="stripe_submit.php" method="post" id="sub_token">
-<input type="hidden" name="currency" id="mob_currency" value="<?php echo strtolower($currency); ?>" />
+    <input type="hidden" name="csrf-protec-not-attac" value="<?php echo get_csrf_token(); ?>" />
+<input type="hidden" name="currency" id="mob_currency" value="<?php echo strtolower( $currency ); ?>" />
 <input type="hidden" name="amount" id="mob_amount" value="0" />
 <input type="hidden" name="stripeToken" id="mob_token" value="" />
 </form>
