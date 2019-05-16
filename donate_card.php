@@ -16,6 +16,8 @@ if(!in_array($currency, $validCurrency)) {
 
 $selected_currency = get_currency( $currency );
 
+$token = get_csrf_token();
+
 header("Content-type: text/html; charset=utf-8");
 ?>
 <html>
@@ -30,13 +32,13 @@ header("Content-type: text/html; charset=utf-8");
 <div style="text-align: center;"><img src="fuelrats2.png"></div>
 <div class="flex-box">
     <div class="selection">
-          <?php render_donation($currency, '1'); ?>
+          <?php render_donation( $currency, '1', $token ); ?>
 </div>
         <div class="selection">
-        <?php render_donation($currency, '5'); ?>
+        <?php render_donation( $currency, '5', $token ); ?>
 </div>
         <div class="selection">
-        <?php render_donation($currency, '10'); ?>
+        <?php render_donation( $currency, '10', $token ); ?>
 </div>
 	<div class="selection">
 	  <h3>Donate</h3><br /><h1>Custom amount of <?php echo $selected_currency['Name']; ?>!</h1><br />
@@ -44,6 +46,7 @@ header("Content-type: text/html; charset=utf-8");
 	  <form action="stripe_submit.php" method="POST" id="custom_amount_form">
 	    <input class="custom_amount" onkeyup="custom_amount_calculate();" placeholder="<?php echo $selected_currency['Symbol']; ?> Custom amount" type="number" name="custom_amount" />
 	    <input id="custom_amount_value" type="hidden" name="amount" />
+          <input type="hidden" name="csrf-protec-not-attac" value="<?php echo $token; ?>" />
       <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
 	    <script
 	      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -52,7 +55,7 @@ header("Content-type: text/html; charset=utf-8");
 	      data-description="Custom amount donation"
 	      data-image="https://donate.fuelrats.com/fuelrats.png"
 	      data-locale="auto"
-	      data-currency="<?php echo strtolower($currency); ?>">
+	      data-currency="<?php echo strtolower( $currency ); ?>">
 	    </script>
     </div>
 </div>

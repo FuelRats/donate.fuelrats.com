@@ -1,4 +1,24 @@
 <?php
+@session_start();
+
+function get_csrf_token() {
+    $token = bin2hex( random_bytes( 32 ) );
+    $_SESSION['token'] = $token;
+
+    return $token;
+}
+
+function validate_csrf_token() {
+    if( ! empty( $_SESSION['token'] ) ) {
+        return false;
+    }
+
+    $token = $_SESSION['token'];
+    unset( $_SESSION['token'] );
+
+    return hash_equals( $_POST['csrf-protec-not-attac'], $token );
+}
+
 require_once 'env-reader.php';
 
 function debug_write( $obj ) {
@@ -91,41 +111,42 @@ function get_currency($currency) {
     return $selected_currency;
 }
 
-function render_donation($currency, $tier) {
+function render_donation( $currency, $tier, $csrf_token ) {
     $selected_currency = get_currency( $currency );
     ?>
     <h3>Donate</h3><br> <h1><?php echo $selected_currency['Symbol'] . $tier; ?></h1><br>
-            <p><?php echo $selected_currency['Tier'][$tier]['Text']; ?></p>
+            <p><?php echo $selected_currency['Tier'][ $tier ]['Text']; ?></p>
             <form action="stripe_submit.php" method="POST">
                 <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>"
-                        data-amount="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>"
+                        data-amount="<?php echo $selected_currency['Tier'][ $tier ]['Sum']; ?>"
                         data-name="The Fuel Rats"
                         data-description="<?php echo $selected_currency['Symbol'] . $tier; ?> Donation"
                         data-image="https://donate.fuelrats.com/fuelrats.png"
                         data-locale="auto"
-                        data-currency="<?php echo strtolower($currency); ?>">
+                        data-currency="<?php echo strtolower( $currency ); ?>">
                 </script>
-                <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][$tier]['Sum']; ?>" />
+                <input type="hidden" name="csrf-protec-not-attac" value="<?php echo $csrf_token; ?>" />
+                <input type="hidden" name="amount" value="<?php echo $selected_currency['Tier'][ $tier ]['Sum']; ?>" />
                 <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
             </form>
     <?php
 }
 
-function render_paymentrequest($currency, $tier) {
+function render_paymentrequest( $currency, $tier ) {
     $selected_currency = get_currency( $currency );
     ?>
     <h3>Donate</h3><br> <h1><?php echo $selected_currency['Symbol'] . $tier; ?></h1><br>
-            <p><?php echo $selected_currency['Tier'][$tier]['Text']; ?></p>
+            <p><?php echo $selected_currency['Tier'][ $tier ]['Text']; ?></p>
             <div class="donation_<?php echo $tier; ?>"></div>
     <script type="text/javascript">
     var pr<?php echo $tier; ?> = stripe.paymentRequest({
         country: 'NO',
-        currency: '<?php echo strtolower($currency); ?>',
+        currency: '<?php echo strtolower( $currency ); ?>',
         total: {
             label: '<?php echo $selected_currency['Symbol'] . $tier; ?> Donation',
-            amount: <?php echo $selected_currency['Tier'][$tier]['Sum']; ?>,
+            amount: <?php echo $selected_currency['Tier'][ $tier ]['Sum']; ?>,
         }
     });
 
@@ -145,7 +166,7 @@ function render_paymentrequest($currency, $tier) {
 
     pr<?php echo $tier; ?>.on('token', function(ev) {
 
-        var amount = <?php echo $selected_currency['Tier'][$tier]['Sum']; ?>;
+        var amount = <?php echo $selected_currency['Tier'][ $tier ]['Sum']; ?>;
         var token = ev.token.id;
 
         document.getElementById('mob_amount').value = amount;
