@@ -9,6 +9,20 @@ require_once 'functions.php';
  * Time: 14:36
  */
 
+  // 197.117.116.250 / mohaaa@cliptik.net
+
+  $blockedIpAddresses = [
+    '197.117.116.250',
+];
+
+if( in_array( $_SERVER['REMOTE_ADDR'], $blockedIpAddresses ) ) {
+    sleep( 10 );
+    ?>
+    <h3>Thank you for your donation!</h3><!-- Also, fuck you -->
+    <?php
+    exit(0);
+}
+
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 require_once 'stripe-php/init.php';
