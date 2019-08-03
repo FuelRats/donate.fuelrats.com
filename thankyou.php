@@ -6,7 +6,7 @@ header("Content-type: text/html; charset=utf-8");
 <head>
     <title>Donation - The Fuel Rats Mischief</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="fuelrats.css" type="text/css" rel="stylesheet"/>
+    <link href="fuelrats.css?t=<?php echo time(); ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div class="page">
