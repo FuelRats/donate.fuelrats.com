@@ -10,7 +10,7 @@ require_once 'functions.php';
     <title>Donation - The Fuel Rats Mischief</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="fuelrats.css" type="text/css" rel="stylesheet"/>
+    <link href="fuelrats.css?t=<?php echo time(); ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <h2>
@@ -45,7 +45,8 @@ require_once 'functions.php';
             <option value="10">10</option>
             <option value="custom">Custom (enter in field below)</option>
         </select>
-        <br />
+    </div>
+    <div class="center">
         <input type="number" name="custom_amount" placeholder="Custom amount" />
     </div>
     <div class="flex-box">

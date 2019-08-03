@@ -1,8 +1,15 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-.center { text-align: center; margin-left: auto; margin-right: auto;}
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-table, body {
+table,
+body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -17,7 +24,7 @@ table, body {
   padding: 15px;
   border-radius: 15px;
   background-color: #FCFCFC;
-  box-shadow: 0 2px 1px rgba(0,0,0,0.16);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.16);
   margin-bottom: 5px;
 }
 
@@ -35,6 +42,14 @@ table, body {
   text-align: right;
 }
 
+select,
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #c9c9c9;
+  width: 20vw;
+}
+
 @media screen and (max-width: 720px) {
   .flex-box {
     flex-direction: column;
@@ -42,5 +57,13 @@ table, body {
 
   .logotype {
     max-height: 128px;
+  }
+
+  select,
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
+    width: 90vw;
   }
 }
