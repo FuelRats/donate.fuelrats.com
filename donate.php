@@ -8,7 +8,6 @@ require_once 'functions.php';
 <html>
 <head>
     <title>Donation - The Fuel Rats Mischief</title>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="fuelrats.css?t=<?php echo time(); ?>" type="text/css" rel="stylesheet"/>
 </head>
@@ -76,11 +75,13 @@ require_once 'functions.php';
     </div>
     <hr/>
     <div class="center">
-        <div class="g-recaptcha" data-sitekey="<?php echo env('RECAPTCHA_SITE_KEY'); ?>" style="display: inline-block;"></div>
-        <br/>
         <input type="hidden" name="donation_type" value="card" />
         <input type="hidden" name="csrf-protec-not-attac" value="<?php echo get_csrf_token(); ?>" />
         <input type="submit" value="Proceed to donation page"/>
+    </div>
+    <hr />
+    <div class="center">
+    The FuelRats Mischief - <a href="https://fuelrats.com/privacy" target="_blank">Privacy policy</a>
     </div>
 </form>
 </div>

@@ -24,5 +24,9 @@ header("Content-type: text/html; charset=utf-8");
     great!</p>
 </div>
 </div>
+<hr />
+<div class="center">
+    The FuelRats Mischief - <a href="https://fuelrats.com/privacy" target="_blank">Privacy policy</a>
+    </div>
 </body>
 </html>
