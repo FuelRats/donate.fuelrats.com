@@ -13,6 +13,7 @@ require_once 'functions.php';
     <link href="fuelrats.css?t=<?php echo time(); ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
+<div class="page">
 <h2>
     <div style="text-align: center;">Donate to The Fuel Rats</div>
 </h2>
@@ -82,5 +83,6 @@ require_once 'functions.php';
         <input type="submit" value="Proceed to donation page"/>
     </div>
 </form>
+</div>
 </body>
 </html>
