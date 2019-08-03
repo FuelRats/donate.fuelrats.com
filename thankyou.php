@@ -9,6 +9,7 @@ header("Content-type: text/html; charset=utf-8");
     <link href="fuelrats.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
+<div class="page">
 <h2>
     <div style="text-align: center;">Donate to The Fuel Rats</div>
 </h2>
@@ -21,6 +22,7 @@ header("Content-type: text/html; charset=utf-8");
     rats
     who have fronted the money to keep these servers running, but if you'd like to contribute, that would be
     great!</p>
+</div>
 </div>
 </body>
 </html>
