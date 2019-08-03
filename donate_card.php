@@ -10,11 +10,43 @@ require_once 'functions.php';
 $currency = $_REQUEST['currency'];
 
 $validCurrency = array('EUR','GBP','USD');
-if(!in_array($currency, $validCurrency)) {
+if( ! in_array( $currency, $validCurrency ) ) {
     $currency = 'EUR';
 }
 
+$amount = $_REQUEST['amount'];
+
+$item_desc = '';
+
 $selected_currency = get_currency( $currency );
+
+if( ! is_numeric( $amount ) ) {
+  if( $amount === "custom" && is_numeric( $_REQUEST['custom_amount'] ) ) {
+    $amount = $_REQUEST['custom_amount'] * 100;
+    $item_desc = 'Holy limpet! You sure like to live dangerously! We are most grateful for everything you can give.';
+  }
+} else {
+  $item_desc = $selected_currency['Tier'][ $amount ]['Text'];
+  $amount = $selected_currency['Tier'][ $amount ]['Sum'];
+}
+
+require_once 'stripe-php/init.php';
+
+\Stripe\Stripe::setApiKey( env( 'STRIPE_SECRET_KEY' ) );
+
+$session = \Stripe\Checkout\Session::create([
+  'payment_method_types' => ['card'],
+  'line_items' => [[
+    'name' => 'Donation',
+    'description' => $item_desc,
+    'amount' => $amount,
+    'currency' => strtolower( $currency ),
+    'quantity' => 1,
+  ]],
+  'success_url' => env( 'STRIPE_SUCCESS_URL' ),
+  'cancel_url' => env( 'STRIPE_CANCEL_URL' ),
+  'submit_type' => 'donate',
+]);
 
 $token = get_csrf_token();
 
@@ -25,10 +57,20 @@ header("Content-type: text/html; charset=utf-8");
 <title>The Fuel Rats Mischief - Donations</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="fuelrats.css" type="text/css" rel="stylesheet" />
-
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-<h2><div style="text-align: center;">Donate to The Fuel Rats</div></h2><br>
+<script type="text/javascript">
+var stripe = Stripe('<?php echo env( 'STRIPE_PUBLIC_KEY' ); ?>');
+
+stripe.redirectToCheckout({
+  sessionId: '<?php echo $session->id; ?>'
+}).then(function (result) {
+  alert(result.error.message);
+  location.href = 'donate.php';
+});
+</script>
+<!--<h2><div style="text-align: center;">Donate to The Fuel Rats</div></h2><br>
 <div style="text-align: center;"><img src="fuelrats2.png"></div>
 <div class="flex-box">
     <div class="selection">
@@ -90,6 +132,6 @@ function custom_amount() {
 function custom_amount_calculate() {
   custom_amount();
 }
-</script>
+</script>-->
 </body>
 </html>

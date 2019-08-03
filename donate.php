@@ -37,21 +37,32 @@ require_once 'functions.php';
             <option value="GBP">British Pounds £</option>
         </select>
     </div>
+    <div class="center">
+        <select required name="amount">
+            <option value="">Select amount</option>
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="custom">Custom (enter in field below)</option>
+        </select>
+        <br />
+        <input type="number" name="custom_amount" placeholder="Custom amount" />
+    </div>
     <div class="flex-box">
-        <div class="selection">
+        <?php /*<div class="selection">
             <label>
                 <h3>Donate with Card</h3>
                 <input type="radio" name="donation_type" value="card"/>
                 I want to donate with my credit card!
             </label>
-        </div>
-        <div class="selection">
+        </div> */ ?>
+        <?php /*<div class="selection">
             <label>
                 <h3>Donate with Apple/Google Pay</h3>
                 <input type="radio" name="donation_type" value="aplgogl"/>
                 I want to donate with Apple / Google Pay!
             </label>
-        </div>
+        </div>*/ ?>
         <?php /*<div class="selection">
             <label>
                 <h3>Donate with Giropay (Only EUR)</h3>
@@ -65,6 +76,7 @@ require_once 'functions.php';
     <div class="center">
         <div class="g-recaptcha" data-sitekey="<?php echo env('RECAPTCHA_SITE_KEY'); ?>" style="display: inline-block;"></div>
         <br/>
+        <input type="hidden" name="donation_type" value="card" />
         <input type="hidden" name="csrf-protec-not-attac" value="<?php echo get_csrf_token(); ?>" />
         <input type="submit" value="Proceed to donation page"/>
     </div>
