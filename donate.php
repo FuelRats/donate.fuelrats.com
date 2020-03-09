@@ -1,4 +1,7 @@
 <?php
+header("Location: https://fuelrats.com/donate");
+exit(0);
+
 header("Content-type: text/html; charset=utf-8");
 require_once 'env-reader.php';
 require_once 'functions.php';
